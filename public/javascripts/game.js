@@ -16,7 +16,7 @@ renderScreen = (game) => {
         context.fillRect(coin.x, coin.y, 1, 1);
     }
     
-    requestAnimation();
+    socket.emit('renderGame');
 }
 
 clearScreen = () => {

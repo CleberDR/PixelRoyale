@@ -9,9 +9,7 @@ socket.on('renderGame', game => {
 	renderScreen(game);
 });
 
-requestAnimation = () => {
-	requestAnimationFrame(socket.emit('renderGame'));
-}
+
 
 
 

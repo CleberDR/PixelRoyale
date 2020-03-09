@@ -48,7 +48,13 @@ app.use(function(err, req, res, next) {
 });
 //GAME
 
-var coin = {x: null, y: null, color: '#FFDF00'};
+class Coin {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+		this.color= '#FFDF00'
+	}
+};
 
 var game = {
     players: [
@@ -71,7 +77,7 @@ io.on('connection', socket => {
 		socket.emit('renderGame', game);
 		socket.broadcast.emit('renderGame', game);
 	});
-	
+
 });
 
 
