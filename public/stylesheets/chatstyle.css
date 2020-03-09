@@ -3,7 +3,7 @@
 
 html, body {
   height: 100%;
-  background-image: url("/images/background.jpg"); 
+  background-image: linear-gradient(to right, #007759 0%, #007a41 100%);
 }
 
 * {
@@ -15,7 +15,7 @@ html, body {
 label{
   font-size:14px;
   font-family: 'Press Start 2P';
-  color:rgb(109, 108, 108);
+  columns: #000000;
   margin-top: 1%;
   margin-bottom: 1%;
 }
@@ -30,7 +30,7 @@ label{
 
 .logo {
   font-family: 'Press Start 2P';
-  background: linear-gradient(to right, #1e5491 0%, #184272 100%);
+  background: linear-gradient(to right, #ffffff 0%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 500%;
@@ -47,9 +47,9 @@ input {
   margin-bottom: 0.5%;
 }
 
-.btnblue{
-  background-image: linear-gradient(to right, #1e5491 0%, #184272 100%);
-  color: #FFF;
+.btnwhite{
+  background-image: linear-gradient(to right, #ffffff 0%, #ffffff 100%);
+  color: #000;
 }
 
 button {
@@ -78,19 +78,22 @@ button span {
   transition: 0.5s;
 }
 
-.game {
-  padding: 0;
-  margin: auto;
-  display: block;
-  width: 850px;
-  height: 850px;
+#screen {
+  border: 3px solid rgb(109, 109, 109);
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+
+  background: rgb(255, 255, 255);
+  width: 500px;
+  height: 500px;
+
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  border: 2px solid #dedede;
-  background-color:#f1f1f1;
+  margin: auto;
 }
 
 

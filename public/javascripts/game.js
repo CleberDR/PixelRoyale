@@ -1,20 +1,22 @@
-var gameArea = undefined;
-var context = undefined;
+const screen = document.getElementById('screen');
+const context = screen.getContext('2d');
 
-var createGameArena = () => {
-	gameArea = document.createElement('canvas');
-	gameArea.id = 'game';
-	gameArea.classList.add('game');
-	document.body.appendChild(gameArea);
+renderScreen = (game) => {
+    for(playerId in game.players) {
+        const player = game.players[playerId]
+        context.fillStyle = player.color;
+        context.fillRect(player.x, player.y, 1, 1);
+    }
+
+    for(coinId in game.coins) {
+        const coin = game.coins[coinId]
+        context.fillStyle = coin.color;
+        context.fillRect(coin.x, coin.y, 1, 1);
+    }
 }
 
-var draw = (player) => {
-	gameArea = document.getElementById('game');
-	context = gameArea.getContext('2d')
-	var draw = () => {
-			context.beginPath();
-			context.rect(5, 5,  5,  5);
-			context.stroke();
-		};
-	draw();
-};
+
+
+
+
+

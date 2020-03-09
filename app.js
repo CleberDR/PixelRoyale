@@ -10,8 +10,8 @@ var bodyParser = require('body-parser');
 var app = express();
 
 //SERVER
-const server = require('http').createServer(app)
-server.listen(3000);  
+const server = require('http').createServer(app).listen(3000)
+ 
 const io = require('socket.io')(server, {
 	pingInterval: 15000,
 	pingTimeout: 30000,
@@ -46,20 +46,30 @@ app.use(function(err, req, res, next) {
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 	res.status(err.status || 500);
 });
+//GAME
+
+var coin = {x: null, y: null, color: '#FFDF00'};
+
+var game = {
+    players: [
+
+    ],
+    coins: [
+
+    ]
+}
 
 //IO
 io.on('connection', socket => {
 	socket.emit('connection');
 
 	socket.on('playerConnected', player => {
-		socket.emit('drawPlayer', player);
-		socket.broadcast.emit('drawPlayer', player);
+		game.players.push(player);
+		socket.emit('renderGame', game);
+		socket.broadcast.emit('renderGame', game);
 	});
 
-	socket.on('updateContext', gameArea => {
-		console.log(gameArea);
-		socket.broadcast.emit('updateContext', gameArea);
-	});
+
 });
 
 

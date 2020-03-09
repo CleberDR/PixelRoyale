@@ -10,10 +10,17 @@
         <link rel="stylesheet" href="stylesheets/chatstyle.css">
     </head>
     
-    <body></body>
+    <body>
+        <canvas id='screen' height='25' width='25'></canvas>
+    </body>
 
     <script>
-        const player = {name: "<%= userContext.user %>", color: "<%= userContext.color %>"}
+        const player = {
+            name: "<%= userContext.user %>", 
+            color: "<%= userContext.color %>",
+            x: 0,
+            y: 0
+        }
     </script>
     <script src="javascripts/game.js" defer></script>
     <script src="javascripts/socketio.js" defer></script>

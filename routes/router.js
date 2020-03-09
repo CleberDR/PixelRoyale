@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../config/database.js');
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   	res.render('index.html');
 });
 
-router.post('/game', function(req, res, next) {
+router.post('/game', (req, res, next) => {
 	userContext = {
 		'user':  req.body.user,
 		'color': req.body.color
