@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>KaluGame</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content='width=1024, user-scalable=0' >
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+        <link rel="stylesheet" href="stylesheets/chatstyle.css">
+    </head>
+    
+    <body></body>
+
+    <script>const player = {name: "<%= userContext.user %>", color: "<%= userContext.color %>"}</script>
+    <script src="javascripts/game.js" defer></script>
+    <script src="javascripts/socketio.js" defer></script>
+
+</html>

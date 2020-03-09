@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>KaluGame</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content='width=1024, user-scalable=0' >
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <script>src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"</script>
+
+        <link rel="stylesheet" href="stylesheets/chatstyle.css">
+    </head>
+
+    <body>
+        <form id="form" name="form" method="post" action="/game">
+            <h1 class="logo unselectable">KaluGame</h1>
+
+            <input class="unselectable small" type="text" name="user" placeholder="Digite seu nome" required>
+        
+            <label class="unselectable" for="color">Escolha sua cor</label>
+            <input class="small" type="color" id="color" name="color" value="#000000">
+           
+            <button type="submit" class="small button unselectable btnblue">ENTRAR</button>
+        </form>
+    </body>
+
+</html>
