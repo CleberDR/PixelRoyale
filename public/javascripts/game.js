@@ -2,6 +2,8 @@ const screen = document.getElementById('screen');
 const context = screen.getContext('2d');
 
 renderScreen = (game) => {
+    clearScreen();
+
     for(playerId in game.players) {
         const player = game.players[playerId]
         context.fillStyle = player.color;
@@ -13,6 +15,13 @@ renderScreen = (game) => {
         context.fillStyle = coin.color;
         context.fillRect(coin.x, coin.y, 1, 1);
     }
+    
+    requestAnimation();
+}
+
+clearScreen = () => {
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, 25, 25);
 }
 
 

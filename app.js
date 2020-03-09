@@ -65,11 +65,13 @@ io.on('connection', socket => {
 
 	socket.on('playerConnected', player => {
 		game.players.push(player);
+	});
+
+	socket.on('renderGame', () => {
 		socket.emit('renderGame', game);
 		socket.broadcast.emit('renderGame', game);
 	});
-
-
+	
 });
 
 

@@ -2,12 +2,16 @@ var socket = io();
 
 socket.on('connection', () => {
 	socket.emit('playerConnected', player);
+	socket.emit('renderGame');
 });
 
 socket.on('renderGame', game => {
-	console.log(game)
 	renderScreen(game);
 });
+
+requestAnimation = () => {
+	requestAnimationFrame(socket.emit('renderGame'));
+}
 
 
 
