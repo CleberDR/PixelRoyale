@@ -48,19 +48,28 @@ app.use(function(err, req, res, next) {
 });
 //GAME
 
-class Coin {
-	constructor(x, y) {
-		this.x = x;
-		this.y = y;
-		this.color= '#FFDF00'
-	}
-};
+const coinGenerator = setInterval(function() {
+	var x = Math.floor(Math.random() * 26)
+	var y = Math.floor(Math.random() * 26)
+	var color = 'rgb(216, 174, 57)'
+	game.coins.push({x, y, color})
+}, 5000);
+
+const bombGenerator = setInterval(function() {
+	var x = Math.floor(Math.random() * 26)
+	var y = Math.floor(Math.random() * 26)
+	var color = 'black';
+	game.bombs.push({x, y, color})
+}, 25000);
 
 var game = {
     players: [
 
     ],
     coins: [
+
+	],
+	bombs: [
 
     ]
 }
@@ -77,7 +86,6 @@ io.on('connection', socket => {
 		socket.emit('renderGame', game);
 		socket.broadcast.emit('renderGame', game);
 	});
-
 });
 
 

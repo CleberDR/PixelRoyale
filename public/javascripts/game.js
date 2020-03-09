@@ -15,7 +15,15 @@ renderScreen = (game) => {
         context.fillStyle = coin.color;
         context.fillRect(coin.x, coin.y, 1, 1);
     }
-    
+
+    for(bombId in game.bombs) {
+        const bomb = game.bombs[bombId]
+        context.fillStyle = bomb.color;
+        context.fillRect(bomb.x, bomb.y, 1, 1);
+    }
+
+    console.log(game);
+
     socket.emit('renderGame');
 }
 
