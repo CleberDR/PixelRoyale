@@ -63,19 +63,17 @@ var game = {
 };
 
 const coinGenerator = setInterval(function() {
-	let date = new Date();
 	var x = Math.floor(Math.random() * game.maxLimit)
 	var y = Math.floor(Math.random() * game.maxLimit)
 	var color = 'rgb(216, 174, 57)'
-	game.coins.push({id: date.getTime(), x: x, y: y, color: color})
+	game.coins.push({x: x, y: y, color: color})
 }, 5000);
 
 const bombGenerator = setInterval(function() {
-	let date = new Date();
 	var x = Math.floor(Math.random() * game.maxLimit)
 	var y = Math.floor(Math.random() * game.maxLimit)
 	var color = 'black';
-	game.bombs.push({id: date.getTime(), x: x, y: y, color: color})
+	game.bombs.push({x: x, y: y, color: color})
 }, 25000);
 
 //IO
@@ -101,7 +99,7 @@ io.on('connection', socket => {
 		socket.broadcast.emit('renderGame', game);
 	});
 
-	
+
 
 	socket.on('keyPress', key => {
 		keyHandler = {
