@@ -3,7 +3,7 @@
 
 html, body {
   height: 100%;
-  background-image: linear-gradient(to right, #007759 0%, #007a41 100%);
+  background: rgb(88, 88, 88);
 }
 
 * {
@@ -11,6 +11,16 @@ html, body {
   padding: 0;
   box-sizing: border-box;
 }
+
+h4{
+  font-family: 'Press Start 2P';
+  font-size:15px;
+  margin-left: 20px;
+  margin-top: 35px;
+  position: absolute;
+}
+
+
 
 label{
   font-size:14px;
@@ -94,6 +104,9 @@ button span {
   left: 0;
   right: 0;
   margin: auto;
+
+  float: left;
+  float: right;
 }
 
 

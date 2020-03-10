@@ -48,22 +48,6 @@ app.use(function(err, req, res, next) {
 });
 //GAME
 
-const coinGenerator = setInterval(function() {
-	let date = new Date();
-	var x = Math.floor(Math.random() * 26)
-	var y = Math.floor(Math.random() * 26)
-	var color = 'rgb(216, 174, 57)'
-	game.coins.push({id: date.getTime(), x: x, y: y, color: color})
-}, 5000);
-
-const bombGenerator = setInterval(function() {
-	let date = new Date();
-	var x = Math.floor(Math.random() * 26)
-	var y = Math.floor(Math.random() * 26)
-	var color = 'black';
-	game.bombs.push({id: date.getTime(), x: x, y: y, color: color})
-}, 25000);
-
 var game = {
 	players: [
 
@@ -73,8 +57,26 @@ var game = {
 	],
 	bombs: [
 
-	]
+	],
+	minLimit: 0,
+	maxLimit: 24
 };
+
+const coinGenerator = setInterval(function() {
+	let date = new Date();
+	var x = Math.floor(Math.random() * game.maxLimit)
+	var y = Math.floor(Math.random() * game.maxLimit)
+	var color = 'rgb(216, 174, 57)'
+	game.coins.push({id: date.getTime(), x: x, y: y, color: color})
+}, 5000);
+
+const bombGenerator = setInterval(function() {
+	let date = new Date();
+	var x = Math.floor(Math.random() * game.maxLimit)
+	var y = Math.floor(Math.random() * game.maxLimit)
+	var color = 'black';
+	game.bombs.push({id: date.getTime(), x: x, y: y, color: color})
+}, 25000);
 
 //IO
 io.on('connection', socket => {
@@ -90,11 +92,22 @@ io.on('connection', socket => {
 		socket.broadcast.emit('renderGame', game);
 	});
 
+	socket.on('disconnect', () => {
+		for(let [index, player] of game.players.entries()) {
+			if(player.id == socket.id) {
+				game.players.splice(index, 1);
+			}
+		}
+		socket.broadcast.emit('renderGame', game);
+	});
+
+	
+
 	socket.on('keyPress', key => {
 		keyHandler = {
 			'ArrowUp': function (game) {
 				game.players.map((player) => {
-					if(player.id == socket.id  && player.y > 0) {
+					if(player.id == socket.id  && player.y > game.minLimit) {
 						player.y--;
 
 						for(let [index, coin] of game.coins.entries()) {
@@ -112,7 +125,6 @@ io.on('connection', socket => {
 						for(let [index, bomb] of game.bombs.entries()) {
 							if(player.x == bomb.x && player.y == bomb.y) {
 								game.bombs.splice(index, 1);
-								player.points = player.points - 10;
 								game.players = game.players.filter((p) => {
 									return p.id != player.id;
 								}, player);
@@ -123,7 +135,7 @@ io.on('connection', socket => {
 			},
 			'ArrowDown': function(game) {
 				game.players.map((player) => {
-					if(player.id == socket.id  && player.y < 24) {
+					if(player.id == socket.id  && player.y < game.maxLimit) {
 						player.y++;
 
 						for(let [index, coin] of game.coins.entries()) {
@@ -141,7 +153,6 @@ io.on('connection', socket => {
 						for(let [index, bomb] of game.bombs.entries()) {
 							if(player.x == bomb.x && player.y == bomb.y) {
 								game.bombs.splice(index, 1);
-								player.points = player.points - 10;
 								game.players = game.players.filter((p) => {
 									return p.id != player.id;
 								}, player);
@@ -152,7 +163,7 @@ io.on('connection', socket => {
 			},
 			'ArrowRight': function(game) {
 				game.players.map((player) => {
-					if(player.id == socket.id && player.x < 24) {
+					if(player.id == socket.id && player.x < game.maxLimit) {
 						player.x++;
 
 						for(let [index, coin] of game.coins.entries()) {
@@ -170,7 +181,6 @@ io.on('connection', socket => {
 						for(let [index, bomb] of game.bombs.entries()) {
 							if(player.x == bomb.x && player.y == bomb.y) {
 								game.bombs.splice(index, 1);
-								player.points = player.points - 10;
 								game.players = game.players.filter((p) => {
 									return p.id != player.id;
 								}, player);
@@ -181,7 +191,7 @@ io.on('connection', socket => {
 			},
 			'ArrowLeft': function (game) {
 				game.players.map((player) => {
-					if(player.id == socket.id && player.x > 0) {
+					if(player.id == socket.id && player.x > game.minLimit) {
 						player.x--;
 
 						for(let [index, coin] of game.coins.entries()) {
@@ -199,7 +209,6 @@ io.on('connection', socket => {
 						for(let [index, bomb] of game.bombs.entries()) {
 							if(player.x == bomb.x && player.y == bomb.y) {
 								game.bombs.splice(index, 1);
-								player.points = player.points - 10;
 								game.players = game.players.filter((p) => {
 									return p.id != player.id;
 								}, player);
