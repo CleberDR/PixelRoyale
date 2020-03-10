@@ -72,7 +72,7 @@ var game = {
 	bombs: [
 
     ]
-}
+};
 
 //IO
 io.on('connection', socket => {
