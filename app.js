@@ -81,6 +81,10 @@ io.on('connection', socket => {
 	socket.emit('connection', socket.id);
 
 	socket.on('playerConnected', player => {
+		var x = Math.floor(Math.random() * game.maxLimit);
+		var y = Math.floor(Math.random() * game.maxLimit);
+		player.x = x;
+		player.y = y;
 		player.id = socket.id;
 		game.players.push(player);
 	});
@@ -112,6 +116,7 @@ io.on('connection', socket => {
 							if(player.x == coin.x && player.y == coin.y) {
 								game.coins.splice(index, 1);
 								player.points++;
+								socket.emit('playCoin');
 							}
 						}
 						for(let [index, enemyPlayer] of game.players.entries()) {
@@ -140,6 +145,7 @@ io.on('connection', socket => {
 							if(player.x == coin.x && player.y == coin.y) {
 								game.coins.splice(index, 1);
 								player.points++;
+								socket.emit('playCoin');
 							}
 						}
 						for(let [index, enemyPlayer] of game.players.entries()) {
@@ -168,6 +174,7 @@ io.on('connection', socket => {
 							if(player.x == coin.x && player.y == coin.y) {
 								game.coins.splice(index, 1);
 								player.points++;
+								socket.emit('playCoin');
 							}
 						}
 						for(let [index, enemyPlayer] of game.players.entries()) {
@@ -196,6 +203,7 @@ io.on('connection', socket => {
 							if(player.x == coin.x && player.y == coin.y) {
 								game.coins.splice(index, 1);
 								player.points++;
+								socket.emit('playCoin');
 							}
 						}
 						for(let [index, enemyPlayer] of game.players.entries()) {
@@ -219,6 +227,15 @@ io.on('connection', socket => {
 
 		if(key == "ArrowUp" || key == "ArrowDown" || key == "ArrowRight" || key == "ArrowLeft") {
 			keyHandler[key](game);
+			game.players = game.players.sort((playerA, playerB) => {
+				if(playerA.points < playerB.points) {
+					return 1;
+				}
+				if(playerA.points > playerB.points) {
+					return -1;
+				}
+				return 0;
+			});
 		}
 
 		socket.broadcast.emit('renderGame', game);
