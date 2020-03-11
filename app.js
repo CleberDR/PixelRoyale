@@ -69,9 +69,9 @@ const bombCollisionTest = (game, player, socket) => {
 			game.players = game.players.filter((p) => {
 				return p.id != player.id;
 			}, player);
-			socket.emit('playBomb');
-			new Promise(r => setTimeout(r, 1000));
 			socket.emit('playerDied');
+			socket.emit('playBomb');
+			socket.broadcast.emit('playBomb');
 		}
 	}
 };
@@ -95,7 +95,7 @@ const enemyPlayerCollisionTest = (game, player, socket) => {
 			}
 			player.points = player.points + enemyPlayer.points;
 			game.players.splice(index, 1);
-			console.log(duel);
+			socket.emit('playKill');
 			socket.broadcast.emit('playerKilled', duel);
 		}
 	}
@@ -130,7 +130,7 @@ const bombGenerator = setInterval(function() {
 	var y = Math.floor(Math.random() * game.maxLimit)
 	var color = 'black';
 	game.bombs.push({x: x, y: y, color: color})
-}, 25000);
+}, 15000);
 
 //IO
 io.on('connection', socket => {
