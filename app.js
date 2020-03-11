@@ -183,9 +183,9 @@ io.on('connection', socket => {
 						} else {
 							player.y--;
 						}
-						enemyPlayerCollisionTest(game, player, socket);
+                        enemyPlayerCollisionTest(game, player, socket);
+                        bombCollisionTest(game, player, socket);
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
@@ -197,9 +197,9 @@ io.on('connection', socket => {
 						} else {
 							player.y++;
 						}
-						enemyPlayerCollisionTest(game, player, socket);;
+                        enemyPlayerCollisionTest(game, player, socket);
+                        bombCollisionTest(game, player, socket);
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
@@ -211,9 +211,9 @@ io.on('connection', socket => {
 						} else {
 							player.x++;
 						}
-						enemyPlayerCollisionTest(game, player, socket);;
+                        enemyPlayerCollisionTest(game, player, socket);
+                        bombCollisionTest(game, player, socket);
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
@@ -225,9 +225,9 @@ io.on('connection', socket => {
 						} else {
 							player.x--;
 						}
-						enemyPlayerCollisionTest(game, player, socket);;
+                        enemyPlayerCollisionTest(game, player, socket);
+                        bombCollisionTest(game, player, socket);
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
