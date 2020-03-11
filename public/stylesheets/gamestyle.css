@@ -17,7 +17,15 @@ h4{
   font-size:10px;
   margin-left: 20px;
   margin-top: 35px;
-  position: absolute;
+  position: absolute;class="logo unselectable" class="logo unselectable"class="logo unselectable" cccdsdsdsds
+}
+
+.unselectable{
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }
 
 label{
@@ -88,13 +96,13 @@ button span {
 
 #screen {
   border: 3px solid rgb(109, 109, 109);
-  image-rendering: pixelated;
+  image-rendering: pixelated ;
   image-rendering: crisp-edges;
   image-rendering: -moz-crisp-edges;
 
   background: rgb(255, 255, 255);
-  width: 500px;
-  height: 500px;
+  width: 800px;
+  height: 800px;
 
   position: absolute;
   top: 0;
@@ -102,9 +110,6 @@ button span {
   left: 0;
   right: 0;
   margin: auto;
-
-  float: left;
-  float: right;
 }
 
 
