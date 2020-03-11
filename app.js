@@ -135,7 +135,7 @@ const coinGenerator = setInterval(function() {
 	var y = Math.floor(Math.random() * game.maxLimit)
 	var color = 'rgb(216, 174, 57)'
 	game.coins.push({x: x, y: y, color: color})
-}, 5000);
+}, 10000);
 
 const bombGenerator = setInterval(function() {
 	var x = Math.floor(Math.random() * game.maxLimit)
@@ -149,10 +149,8 @@ io.on('connection', socket => {
 	socket.emit('connection', socket.id);
 
 	socket.on('playerConnected', player => {
-		var x = Math.floor(Math.random() * game.maxLimit);
-		var y = Math.floor(Math.random() * game.maxLimit);
-		player.x = x;
-		player.y = y;
+		player.x = Math.floor(Math.random() * game.maxLimit);
+		player.y = Math.floor(Math.random() * game.maxLimit);
 		player.id = socket.id;
 		game.players.push(player);
 	});
