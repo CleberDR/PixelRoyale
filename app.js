@@ -46,8 +46,8 @@ app.use(function(err, req, res, next) {
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 	res.status(err.status || 500);
 });
-//GAME
 
+//GAME
 var game = {
 	players: [
 
@@ -62,13 +62,16 @@ var game = {
 	maxLimit: 24
 };
 
-const bombCollisionTest = (game, player) => {
+const bombCollisionTest = (game, player, socket) => {
 	for(let [index, bomb] of game.bombs.entries()) {
 		if(player.x == bomb.x && player.y == bomb.y) {
 			game.bombs.splice(index, 1);
 			game.players = game.players.filter((p) => {
 				return p.id != player.id;
 			}, player);
+			socket.emit('playBomb');
+			new Promise(r => setTimeout(r, 1000));
+			socket.emit('playerDied');
 		}
 	}
 };
@@ -83,11 +86,17 @@ const coinCollisionTest = (game, player, socket) => {
 	}
 }
 
-const enemyPlayerCollisionTest = (game, player) => {
+const enemyPlayerCollisionTest = (game, player, socket) => {
 	for(let [index, enemyPlayer] of game.players.entries()) {
 		if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
+			var duel = {
+				'killer': player,
+				'killed': enemyPlayer
+			}
 			player.points = player.points + enemyPlayer.points;
 			game.players.splice(index, 1);
+			console.log(duel);
+			socket.broadcast.emit('playerKilled', duel);
 		}
 	}
 };
@@ -153,14 +162,14 @@ io.on('connection', socket => {
 
 
 	socket.on('keyPress', key => {
-		keyHandler = {
+		const keyHandler = {
 			'ArrowUp': function (game) {
 				game.players.map((player) => {
 					if(player.id == socket.id  && player.y > game.minLimit) {
 						player.y--;
-						enemyPlayerCollisionTest(game, player);
+						enemyPlayerCollisionTest(game, player, socket);
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player);
+						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
@@ -168,9 +177,9 @@ io.on('connection', socket => {
 				game.players.map((player) => {
 					if(player.id == socket.id  && player.y < game.maxLimit) {
 						player.y++;
-						enemyPlayerCollisionTest(game, player);
+						enemyPlayerCollisionTest(game, player, socket);;
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player);
+						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
@@ -178,9 +187,9 @@ io.on('connection', socket => {
 				game.players.map((player) => {
 					if(player.id == socket.id && player.x < game.maxLimit) {
 						player.x++;
-						enemyPlayerCollisionTest(game, player);
+						enemyPlayerCollisionTest(game, player, socket);;
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player);
+						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
@@ -188,9 +197,9 @@ io.on('connection', socket => {
 				game.players.map((player) => {
 					if(player.id == socket.id && player.x > game.minLimit) {
 						player.x--;
-						enemyPlayerCollisionTest(game, player);
+						enemyPlayerCollisionTest(game, player, socket);;
 						coinCollisionTest(game, player, socket);
-						bombCollisionTest(game, player);
+						bombCollisionTest(game, player, socket);
 					}
 				})
 			},
