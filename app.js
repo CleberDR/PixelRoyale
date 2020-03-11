@@ -62,6 +62,53 @@ var game = {
 	maxLimit: 24
 };
 
+const bombCollisionTest = (game, player) => {
+	for(let [index, bomb] of game.bombs.entries()) {
+		if(player.x == bomb.x && player.y == bomb.y) {
+			game.bombs.splice(index, 1);
+			game.players = game.players.filter((p) => {
+				return p.id != player.id;
+			}, player);
+		}
+	}
+};
+
+const coinCollisionTest = (game, player, socket) => {
+	for(let [index, coin] of game.coins.entries()) {
+		if(player.x == coin.x && player.y == coin.y) {
+			game.coins.splice(index, 1);
+			player.points++;
+			socket.emit('playCoin');
+		}
+	}
+}
+
+const enemyPlayerCollisionTest = (game, player) => {
+	for(let [index, enemyPlayer] of game.players.entries()) {
+		if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
+			player.points = player.points + enemyPlayer.points;
+			game.players.splice(index, 1);
+		}
+	}
+};
+
+const sortPlayers = (players) => {
+	var sortedPlayers =  players.sort((playerA, playerB) => {
+		if(playerA.points < playerB.points) {
+			return 1;
+		}
+		if(playerA.points > playerB.points) {
+			return -1;
+		}
+		return 0;
+	});
+	return sortedPlayers;
+}
+
+const isGameKey = (key) => {
+	return (key == "ArrowUp" || key == "ArrowDown" || key == "ArrowRight" || key == "ArrowLeft");
+}
+
 const coinGenerator = setInterval(function() {
 	var x = Math.floor(Math.random() * game.maxLimit)
 	var y = Math.floor(Math.random() * game.maxLimit)
@@ -111,28 +158,9 @@ io.on('connection', socket => {
 				game.players.map((player) => {
 					if(player.id == socket.id  && player.y > game.minLimit) {
 						player.y--;
-
-						for(let [index, coin] of game.coins.entries()) {
-							if(player.x == coin.x && player.y == coin.y) {
-								game.coins.splice(index, 1);
-								player.points++;
-								socket.emit('playCoin');
-							}
-						}
-						for(let [index, enemyPlayer] of game.players.entries()) {
-							if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
-								game.players.splice(index, 1);
-								player.points = player.points + 10;
-							}
-						}
-						for(let [index, bomb] of game.bombs.entries()) {
-							if(player.x == bomb.x && player.y == bomb.y) {
-								game.bombs.splice(index, 1);
-								game.players = game.players.filter((p) => {
-									return p.id != player.id;
-								}, player);
-							}
-						}
+						enemyPlayerCollisionTest(game, player);
+						coinCollisionTest(game, player, socket);
+						bombCollisionTest(game, player);
 					}
 				})
 			},
@@ -140,28 +168,9 @@ io.on('connection', socket => {
 				game.players.map((player) => {
 					if(player.id == socket.id  && player.y < game.maxLimit) {
 						player.y++;
-
-						for(let [index, coin] of game.coins.entries()) {
-							if(player.x == coin.x && player.y == coin.y) {
-								game.coins.splice(index, 1);
-								player.points++;
-								socket.emit('playCoin');
-							}
-						}
-						for(let [index, enemyPlayer] of game.players.entries()) {
-							if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
-								game.players.splice(index, 1);
-								player.points = player.points + 10;
-							}
-						}
-						for(let [index, bomb] of game.bombs.entries()) {
-							if(player.x == bomb.x && player.y == bomb.y) {
-								game.bombs.splice(index, 1);
-								game.players = game.players.filter((p) => {
-									return p.id != player.id;
-								}, player);
-							}
-						}
+						enemyPlayerCollisionTest(game, player);
+						coinCollisionTest(game, player, socket);
+						bombCollisionTest(game, player);
 					}
 				})
 			},
@@ -169,28 +178,9 @@ io.on('connection', socket => {
 				game.players.map((player) => {
 					if(player.id == socket.id && player.x < game.maxLimit) {
 						player.x++;
-
-						for(let [index, coin] of game.coins.entries()) {
-							if(player.x == coin.x && player.y == coin.y) {
-								game.coins.splice(index, 1);
-								player.points++;
-								socket.emit('playCoin');
-							}
-						}
-						for(let [index, enemyPlayer] of game.players.entries()) {
-							if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
-								game.players.splice(index, 1);
-								player.points = player.points + 10;
-							}
-						}
-						for(let [index, bomb] of game.bombs.entries()) {
-							if(player.x == bomb.x && player.y == bomb.y) {
-								game.bombs.splice(index, 1);
-								game.players = game.players.filter((p) => {
-									return p.id != player.id;
-								}, player);
-							}
-						}
+						enemyPlayerCollisionTest(game, player);
+						coinCollisionTest(game, player, socket);
+						bombCollisionTest(game, player);
 					}
 				})
 			},
@@ -198,44 +188,17 @@ io.on('connection', socket => {
 				game.players.map((player) => {
 					if(player.id == socket.id && player.x > game.minLimit) {
 						player.x--;
-
-						for(let [index, coin] of game.coins.entries()) {
-							if(player.x == coin.x && player.y == coin.y) {
-								game.coins.splice(index, 1);
-								player.points++;
-								socket.emit('playCoin');
-							}
-						}
-						for(let [index, enemyPlayer] of game.players.entries()) {
-							if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
-								game.players.splice(index, 1);
-								player.points = player.points + 10;
-							}
-						}
-						for(let [index, bomb] of game.bombs.entries()) {
-							if(player.x == bomb.x && player.y == bomb.y) {
-								game.bombs.splice(index, 1);
-								game.players = game.players.filter((p) => {
-									return p.id != player.id;
-								}, player);
-							}
-						}
+						enemyPlayerCollisionTest(game, player);
+						coinCollisionTest(game, player, socket);
+						bombCollisionTest(game, player);
 					}
 				})
 			},
 		}
-
-		if(key == "ArrowUp" || key == "ArrowDown" || key == "ArrowRight" || key == "ArrowLeft") {
+		
+		if(isGameKey(key)) {
 			keyHandler[key](game);
-			game.players = game.players.sort((playerA, playerB) => {
-				if(playerA.points < playerB.points) {
-					return 1;
-				}
-				if(playerA.points > playerB.points) {
-					return -1;
-				}
-				return 0;
-			});
+			game.players = sortPlayers(game.players);
 		}
 
 		socket.broadcast.emit('renderGame', game);
