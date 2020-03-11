@@ -21,17 +21,18 @@ socket.on('playBomb', () => {
 });
 
 socket.on('playKill', () => {
-	console.log('kill');
 	killAudio.play();
 });
 
 socket.on('playerDied', () => {
-	console.log('dead');
+	playerDead = true;
+	textRender();
 });
 
 socket.on('playerKilled', duel => {
 	if(socket.id == duel.killed.id) {
-		console.log('killed by '+duel.killer.name);
+		playerDead = true;
+		textRender();
 	}
 });
 

@@ -1,9 +1,12 @@
 const screen = document.getElementById('screen');
 const context = screen.getContext('2d');
 var playerList = document.getElementById('playerList');
+var playerDead = false;
 
-renderScreen = (game) => { 
-	clearScreen();
+const renderScreen = (game) => { 
+	if(!playerDead){
+		clearScreen();
+	}
 	for(const coin of game.coins) {
 		context.fillStyle = coin.color;
 		context.fillRect(coin.x, coin.y, 1, 1);
@@ -19,12 +22,12 @@ renderScreen = (game) => {
 	playerListRender(game);
 }
 
-clearScreen = () => {
+const clearScreen = () => {
 	context.fillStyle = 'white';
 	context.clearRect(0, 0, 25, 25);
 };
 
-playerListRender = (game) => {
+const playerListRender = (game) => {
 	playerList.innerHTML = "";
 	var listText = "";
 	for(let player of game.players) {
@@ -32,6 +35,12 @@ playerListRender = (game) => {
 	}
 	playerList.innerHTML = listText;
 };
+
+const textRender = () => {
+	context.font = "Press Start 2P";
+	context.fillStyle = 'red';
+	context.fillText("Dead", 0, 15);
+}
 
 document.addEventListener('keydown', (event) => {
 	socket.emit('keyPress', event.key)
