@@ -20,9 +20,6 @@ socket.on('playBomb', () => {
 	bombAudio.play();
 });
 
-socket.on('playKill', () => {
-	killAudio.play();
-});
 
 socket.on('playerDied', () => {
 	playerDead = true;
@@ -33,6 +30,8 @@ socket.on('playerKilled', duel => {
 	if(socket.id == duel.killed.id) {
 		playerDead = true;
 		textRender();
+	} else {
+		killAudio.play();
 	}
 });
 

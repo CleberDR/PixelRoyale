@@ -89,13 +89,25 @@ const coinCollisionTest = (game, player, socket) => {
 const enemyPlayerCollisionTest = (game, player, socket) => {
 	for(let [index, enemyPlayer] of game.players.entries()) {
 		if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
-			var duel = {
-				'killer': player,
-				'killed': enemyPlayer
+
+			if(player.points >= enemyPlayer.points) {
+				var duel = {
+					'killer': player,
+					'killed': enemyPlayer
+				}
+				player.points = player.points + enemyPlayer.points;
+				game.players.splice(index, 1);
+			} else {
+				var duel = {
+					'killer': enemyPlayer,
+					'killed': player
+				}
+				enemyPlayer.points = enemyPlayer.points + player.points;
+				game.players = game.players.filter((p) => {
+					return p.id != player.id;
+				}, player);
 			}
-			player.points = player.points + enemyPlayer.points;
-			game.players.splice(index, 1);
-			socket.emit('playKill');
+			socket.emit('playerKilled', duel);
 			socket.broadcast.emit('playerKilled', duel);
 		}
 	}
@@ -165,8 +177,12 @@ io.on('connection', socket => {
 		const keyHandler = {
 			'ArrowUp': function (game) {
 				game.players.map((player) => {
-					if(player.id == socket.id  && player.y > game.minLimit) {
-						player.y--;
+					if(player.id == socket.id) {
+						if(player.y == game.minLimit) {
+							player.y = game.maxLimit
+						} else {
+							player.y--;
+						}
 						enemyPlayerCollisionTest(game, player, socket);
 						coinCollisionTest(game, player, socket);
 						bombCollisionTest(game, player, socket);
@@ -175,8 +191,12 @@ io.on('connection', socket => {
 			},
 			'ArrowDown': function(game) {
 				game.players.map((player) => {
-					if(player.id == socket.id  && player.y < game.maxLimit) {
-						player.y++;
+					if(player.id == socket.id) {
+						if(player.y == game.maxLimit) {
+							player.y = game.minLimit
+						} else {
+							player.y++;
+						}
 						enemyPlayerCollisionTest(game, player, socket);;
 						coinCollisionTest(game, player, socket);
 						bombCollisionTest(game, player, socket);
@@ -185,8 +205,12 @@ io.on('connection', socket => {
 			},
 			'ArrowRight': function(game) {
 				game.players.map((player) => {
-					if(player.id == socket.id && player.x < game.maxLimit) {
-						player.x++;
+					if(player.id == socket.id) {
+						if(player.x == game.maxLimit) {
+							player.x = game.minLimit
+						} else {
+							player.x++;
+						}
 						enemyPlayerCollisionTest(game, player, socket);;
 						coinCollisionTest(game, player, socket);
 						bombCollisionTest(game, player, socket);
@@ -195,8 +219,12 @@ io.on('connection', socket => {
 			},
 			'ArrowLeft': function (game) {
 				game.players.map((player) => {
-					if(player.id == socket.id && player.x > game.minLimit) {
-						player.x--;
+					if(player.id == socket.id) {
+						if(player.x == game.minLimit) {
+							player.x = game.maxLimit
+						} else {
+							player.x--;
+						}
 						enemyPlayerCollisionTest(game, player, socket);;
 						coinCollisionTest(game, player, socket);
 						bombCollisionTest(game, player, socket);
