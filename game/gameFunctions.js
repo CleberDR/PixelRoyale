@@ -68,7 +68,6 @@ const isGameKey = (key) => {
 	return (key == "ArrowUp" || key == "ArrowDown" || key == "ArrowRight" || key == "ArrowLeft");
 }
 
-
 module.exports = {
     bombCollisionTest,
     coinCollisionTest,
