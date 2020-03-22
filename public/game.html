@@ -1,35 +1,33 @@
 <html>
-    <head>
-        <title>PixelRoyale</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content='width=1024, user-scalable=0' >
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
-        <link rel="stylesheet" href="stylesheets/gamestyle.css">
-    </head>
-    
-    <body>
-        <canvas id='screen' height='25' width='25'>
-            
-        </canvas>
-        <div class="unselectable" id="playerList">
-            
-        </div>
-    </body>
+  <head>
+    <title>PixelRoyale</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1024, user-scalable=0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
+    />
+    <link rel="stylesheet" href="stylesheets/gamestyle.css" />
+  </head>
 
-    <script>
-        const player = {
-            id: null,
-            name: "<%= userContext.user %>", 
-            color: "<%= userContext.color %>",
-            x: 0,
-            y: 0,
-            points: 0
-        }
-    </script>
-    <script src="javascripts/game.js" defer></script>
-    <script src="javascripts/socketio.js" defer></script>
+  <body>
+    <canvas id="screen" height="25" width="25"> </canvas>
+    <div class="unselectable" id="playerList"></div>
+  </body>
 
+  <script>
+    const player = {
+      id: null,
+      name: "<%= userContext.user %>",
+      color: "<%= userContext.color %>",
+      x: 0,
+      y: 0,
+      points: 0
+    };
+  </script>
+  <script src="javascripts/game.js" defer></script>
+  <script src="javascripts/socketio.js" defer></script>
 </html>

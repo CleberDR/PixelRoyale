@@ -1,27 +1,42 @@
 <html>
-    <head>
-        <title>PixelRoyale</title>
+  <head>
+    <title>PixelRoyale</title>
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content='width=1024, user-scalable=0' >
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1024, user-scalable=0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-        <script>src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"</script>
+    <script>
+      src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js";
+    </script>
 
-        <link rel="stylesheet" href="stylesheets/gamestyle.css">
-    </head>
+    <link rel="stylesheet" href="stylesheets/gamestyle.css" />
+  </head>
 
-    <body>
-        <form id="form" name="form" method="post" action="/game">
-            <h1 class="logo unselectable">PixelRoyale</h1>
+  <body>
+    <form id="form" name="form" method="post" action="/game">
+      <h1 class="logo unselectable">PixelRoyale</h1>
 
-            <input class="unselectable small" type="text" name="user" placeholder="Digite seu nome" required>
-        
-            <label class="unselectable" for="color">Escolha sua cor</label>
-            <input class="small" type="color" id="color" name="color" value="#d3d3d3">
-           
-            <button type="submit" class="small button unselectable btnwhite">ENTRAR</button>
-        </form>
-    </body>
+      <input
+        class="unselectable small"
+        type="text"
+        name="user"
+        placeholder="Digite seu nome"
+        required
+      />
 
+      <label class="unselectable" for="color">Escolha sua cor</label>
+      <input
+        class="small"
+        type="color"
+        id="color"
+        name="color"
+        value="#d3d3d3"
+      />
+
+      <button type="submit" class="small button unselectable btnwhite">
+        ENTRAR
+      </button>
+    </form>
+  </body>
 </html>

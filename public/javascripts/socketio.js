@@ -27,7 +27,7 @@ socket.on('playerDied', () => {
 });
 
 socket.on('playerKilled', duel => {
-	if(socket.id == duel.killed.id) {
+	if (socket.id == duel.killed.id) {
 		playerDead = true;
 		textRender();
 	} else {

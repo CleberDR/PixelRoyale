@@ -3,7 +3,7 @@ var game = require('./game/gameStructure.js');
 const keyHandler = require('./game/gameKeyHandler.js');
 const {
 	sortPlayers
-  } = require('./game/gameFunctions');
+} = require('./game/gameFunctions');
 
 const server = require('http').createServer(app).listen(3000)
 const io = require('socket.io')(server, {
@@ -26,8 +26,8 @@ io.on('connection', socket => {
 	});
 
 	socket.on('disconnect', () => {
-		for(let [index, player] of game.players.entries()) {
-			if(player.id == socket.id) {
+		for (let [index, player] of game.players.entries()) {
+			if (player.id == socket.id) {
 				game.players.splice(index, 1);
 			}
 		}
@@ -36,7 +36,7 @@ io.on('connection', socket => {
 
 	socket.on('keyPress', key => {
 		const movePlayer = keyHandler[key];
-		if(movePlayer) {
+		if (movePlayer) {
 			movePlayer(game, socket);
 			sortPlayers(game.players);
 			socket.broadcast.emit('renderGame', game);
@@ -47,6 +47,6 @@ io.on('connection', socket => {
 });
 
 module.exports = {
-    server,
-    io
+	server,
+	io
 }

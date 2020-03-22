@@ -1,14 +1,14 @@
 const {
     bombCollisionTest,
     coinCollisionTest,
-	enemyPlayerCollisionTest,
-  } = require('./gameFunctions');
+    enemyPlayerCollisionTest,
+} = require('./gameFunctions');
 
 const keyHandler = {
     'ArrowUp': function (game, socket) {
         game.players.map((player) => {
-            if(player.id == socket.id) {
-                if(player.y == game.minLimit) {
+            if (player.id == socket.id) {
+                if (player.y == game.minLimit) {
                     player.y = game.maxLimit
                 } else {
                     player.y--;
@@ -19,10 +19,10 @@ const keyHandler = {
             }
         })
     },
-    'ArrowDown': function(game, socket) {
+    'ArrowDown': function (game, socket) {
         game.players.map((player) => {
-            if(player.id == socket.id) {
-                if(player.y == game.maxLimit) {
+            if (player.id == socket.id) {
+                if (player.y == game.maxLimit) {
                     player.y = game.minLimit
                 } else {
                     player.y++;
@@ -33,10 +33,10 @@ const keyHandler = {
             }
         })
     },
-    'ArrowRight': function(game, socket) {
+    'ArrowRight': function (game, socket) {
         game.players.map((player) => {
-            if(player.id == socket.id) {
-                if(player.x == game.maxLimit) {
+            if (player.id == socket.id) {
+                if (player.x == game.maxLimit) {
                     player.x = game.minLimit
                 } else {
                     player.x++;
@@ -49,8 +49,8 @@ const keyHandler = {
     },
     'ArrowLeft': function (game, socket) {
         game.players.map((player) => {
-            if(player.id == socket.id) {
-                if(player.x == game.minLimit) {
+            if (player.id == socket.id) {
+                if (player.x == game.minLimit) {
                     player.x = game.maxLimit
                 } else {
                     player.x--;

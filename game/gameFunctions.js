@@ -1,6 +1,6 @@
 const bombCollisionTest = (game, player, socket) => {
-	for(let [index, bomb] of game.bombs.entries()) {
-		if(player.x == bomb.x && player.y == bomb.y) {
+	for (let [index, bomb] of game.bombs.entries()) {
+		if (player.x == bomb.x && player.y == bomb.y) {
 			game.bombs.splice(index, 1);
 			game.players = game.players.filter((p) => {
 				return p.id != player.id;
@@ -13,8 +13,8 @@ const bombCollisionTest = (game, player, socket) => {
 };
 
 const coinCollisionTest = (game, player, socket) => {
-	for(let [index, coin] of game.coins.entries()) {
-		if(player.x == coin.x && player.y == coin.y) {
+	for (let [index, coin] of game.coins.entries()) {
+		if (player.x == coin.x && player.y == coin.y) {
 			game.coins.splice(index, 1);
 			player.points++;
 			socket.emit('playCoin');
@@ -23,10 +23,10 @@ const coinCollisionTest = (game, player, socket) => {
 }
 
 const enemyPlayerCollisionTest = (game, player, socket) => {
-	for(let [index, enemyPlayer] of game.players.entries()) {
-		if(player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
+	for (let [index, enemyPlayer] of game.players.entries()) {
+		if (player.x == enemyPlayer.x && player.y == enemyPlayer.y && player.id != enemyPlayer.id) {
 
-			if(player.points >= enemyPlayer.points) {
+			if (player.points >= enemyPlayer.points) {
 				var duel = {
 					'killer': player,
 					'killed': enemyPlayer
@@ -43,7 +43,7 @@ const enemyPlayerCollisionTest = (game, player, socket) => {
 				game.players = game.players.filter((p) => {
 					return p.id != player.id;
 				}, player);
-				
+
 			}
 			socket.emit('playerKilled', duel);
 			socket.broadcast.emit('playerKilled', duel);
@@ -52,11 +52,11 @@ const enemyPlayerCollisionTest = (game, player, socket) => {
 };
 
 const sortPlayers = (players) => {
-	var players =  players.sort((playerA, playerB) => {
-		if(playerA.points < playerB.points) {
+	var players = players.sort((playerA, playerB) => {
+		if (playerA.points < playerB.points) {
 			return 1;
 		}
-		if(playerA.points > playerB.points) {
+		if (playerA.points > playerB.points) {
 			return -1;
 		}
 		return 0;
@@ -65,8 +65,8 @@ const sortPlayers = (players) => {
 }
 
 module.exports = {
-    bombCollisionTest,
-    coinCollisionTest,
+	bombCollisionTest,
+	coinCollisionTest,
 	enemyPlayerCollisionTest,
 	sortPlayers
 }
