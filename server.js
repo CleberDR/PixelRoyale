@@ -2,8 +2,7 @@ var app = require('./app.js');
 var game = require('./game/gameStructure.js');
 const keyHandler = require('./game/gameKeyHandler.js');
 const {
-	sortPlayers,
-	isGameKey
+	sortPlayers
   } = require('./game/gameFunctions');
 
 const server = require('http').createServer(app).listen(3000)
@@ -36,12 +35,13 @@ io.on('connection', socket => {
 	});
 
 	socket.on('keyPress', key => {
-		if(isGameKey(key)) {
-			keyHandler[key](game, socket);
-			game.players = sortPlayers(game.players);
+		const movePlayer = keyHandler[key];
+		if(movePlayer) {
+			movePlayer(game, socket);
+			sortPlayers(game.players);
+			socket.broadcast.emit('renderGame', game);
+			socket.emit('renderGame', game);
 		}
-		socket.broadcast.emit('renderGame', game);
-		socket.emit('renderGame', game);
 	});
 
 });

@@ -52,7 +52,7 @@ const enemyPlayerCollisionTest = (game, player, socket) => {
 };
 
 const sortPlayers = (players) => {
-	var sortedPlayers =  players.sort((playerA, playerB) => {
+	var players =  players.sort((playerA, playerB) => {
 		if(playerA.points < playerB.points) {
 			return 1;
 		}
@@ -61,19 +61,14 @@ const sortPlayers = (players) => {
 		}
 		return 0;
 	});
-	return sortedPlayers;
-}
-
-const isGameKey = (key) => {
-	return (key == "ArrowUp" || key == "ArrowDown" || key == "ArrowRight" || key == "ArrowLeft");
+	return;
 }
 
 module.exports = {
     bombCollisionTest,
     coinCollisionTest,
 	enemyPlayerCollisionTest,
-	sortPlayers,
-	isGameKey
+	sortPlayers
 }
 
 
